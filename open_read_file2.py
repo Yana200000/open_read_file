@@ -28,8 +28,6 @@ file3.write("""В  это время  дня  машины текли сплош
 толчею.""")
 file3.close()
 
-import os
-
 os.chdir(r'C:\Users\User\Desktop\Нетология\hw 12.09')
 
 def merging_files():

@@ -1,4 +1,5 @@
 from pprint import pprint
+from collections import Counter
 
 file = open("recipes3.txt", "w+")
 file.write("""Омлет
@@ -30,7 +31,6 @@ file.write("""Омлет
 
 file.close()
 
-
 def prepare_dict(file_name: str) -> dict:
     result: dict = dict()
 
@@ -54,12 +54,15 @@ cook_book = prepare_dict("recipes3.txt")
 
 def get_shop_list_by_dishes(dishes, person_count):
     recipes = {}
-    for dish in dishes:
-        for i in range(0, len(cook_book[dish])):
-            recipes['quantity'] = cook_book[dish][i]['quantity'] * person_count
-            recipes['measure'] = cook_book[dish][i]['measure']
-            recipes = {cook_book[dish][i]['ingredient_name']: {'measure': recipes['measure'], 'quantity': recipes['quantity']}}
+    counter = Counter(dishes)
+    for dish1 in counter.keys():
+        for i in range(0, len(cook_book[dish1])):
+            recipes['quantity'] = cook_book[dish1][i]['quantity'] * person_count * counter[dish1]
+            recipes['measure'] = cook_book[dish1][i]['measure']
+            recipes = {cook_book[dish1][i]['ingredient_name']: {'measure': recipes['measure'], 'quantity': recipes['quantity']}}
             print(recipes)
 
-print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+
+print(get_shop_list_by_dishes(['Омлет', 'Омлет'], 1))
+print(get_shop_list_by_dishes(['Омлет'], 2))
 
